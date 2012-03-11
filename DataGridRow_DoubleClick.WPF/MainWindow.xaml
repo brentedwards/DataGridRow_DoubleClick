@@ -1,0 +1,40 @@
+﻿<Window x:Class="DataGridRow_DoubleClick.WPF.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="clr-namespace:DataGridRow_DoubleClick.WPF.ViewModels"
+		xmlns:helpers="clr-namespace:DataGridRow_DoubleClick.WPF.Helpers"
+		Title="MainWindow" Height="350" Width="525">
+	<Window.DataContext>
+		<vm:MainViewModel />
+	</Window.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<GroupBox Header="With Codebehind">
+			<DataGrid
+				DataContext="{Binding CodeBehind}"
+				ItemsSource="{Binding People}"
+				SelectedItem="{Binding SelectedPerson}"
+				IsReadOnly="True">
+				<DataGrid.ItemContainerStyle>
+					<Style TargetType="DataGridRow">
+						<EventSetter Event="MouseDoubleClick"
+									 Handler="OnMouseDoubleClick" />
+					</Style>
+				</DataGrid.ItemContainerStyle>
+			</DataGrid>
+		</GroupBox>
+		
+		<GroupBox
+			Header="With Attached Property"
+			Grid.Row="1">
+			<DataGrid DataContext="{Binding AttachedProperty}"
+					  ItemsSource="{Binding People}"
+					  SelectedItem="{Binding SelectedPerson}"
+					  IsReadOnly="True"
+					  helpers:RowDoubleClickHandler.MethodName="Edit" />
+		</GroupBox>
+	</Grid>
+</Window>
